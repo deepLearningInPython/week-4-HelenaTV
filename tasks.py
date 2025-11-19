@@ -29,22 +29,12 @@ import numpy as np
 text = "The quick brown fox jumps over the lazy dog!"
 
 # Write a list comprehension to tokenize the text and remove punctuation
-tokens = [''.join(letter.lower() for letter in word if letter.isalpha()) 
-          for word in text.split() 
-          if any(letter.isalpha() for letter in word)]
+tokens = [''.join(letter.lower() for letter in word if letter.isalpha()) for word in text.split() if any(letter.isalpha() for letter in word)]
 
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 print(tokens)
-
-
-
-
-
 # -----------------------------------------------
-
-
-
 
 # Task 2: Create a function that takes a string and breaks it up into tokens and removes any 
 #   punctuation, and then converts each token to lowercase. The function should returns unique 
@@ -53,9 +43,16 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    pass # Your code
-
-
+  tokenized_string = []
+  for word in string.split():
+    new_word = ""
+    for letter in word: 
+      if letter.isalpha():
+        new_word +=letter.lower()
+    if new_word: 
+      tokenized_string.append(new_word)
+  tokenized_string.sort()
+  return tokenized_string
 # -----------------------------------------------
 
 
@@ -82,15 +79,15 @@ def tokenize(string: str) -> list:
 
 # Your code here:
 # -----------------------------------------------
-word_frequencies = _ # Your code here
+word_frequencies = {word: tokens.count(word) for word in tokens}
 
 # Expected output example: {'the': 2, 'quick': 1, ...}
 print(word_frequencies)
 
 # Modify the comprehension to include only words that appear more than once.
 # -----------------------------------------------
-
-
+word_frequencies2 = {word: tokens.count(word) for word in tokens if tokens.count(word) >1}
+print(word_frequencies2)
 
 # Task 4: Define a function that takes a string and an integer k, and returns a dictionary with
 #   the token frequencies of only those tokens that occur more than k times in the string.
@@ -98,7 +95,10 @@ print(word_frequencies)
 # Your code here:
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
-    pass # Your code
+  word_frequencies = {word: string.count(word) for word in string if string.count(word) > k}
+  
+  return word_frequencies
+    
 
 # test:
 text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
@@ -129,7 +129,7 @@ all(text_hist[key] == value for key, value in token_counts(text).items())
 
 # Your code here:
 # -----------------------------------------------
-token_to_id = _ # Your code here
+token_to_id = {str(word): index for index, word in enumerate(np.unique(tokens))}
 
 # Expected output: {'dog': 0, 'quick': 1, 'fox': 2, 'the': 3, 'over': 4, 'lazy': 5, 'brown': 6, 'jumps': 7}
 print(token_to_id)
@@ -141,7 +141,7 @@ print(token_to_id)
 #
 # Your code here:
 # -----------------------------------------------
-id_to_token = _ # Your code here
+id_to_token = {index: str(word) for index, word in enumerate(np.unique(tokens))} 
 
 # tests: 
 # test 1
@@ -318,8 +318,8 @@ o.shape == (100,) and o.mean().round(3) == 16.287 and o.std().astype(int) == 133
 
 # Your code here:
 # -----------------------------------------------
-#def rnn_loss(w: np.array, w, list_of_sequences: list[np.array], y: np.array) -> np.float64:
-    #pass # Your code
+def rnn_loss(w: np.array, w, list_of_sequences: list[np.array], y: np.array) -> np.float64:
+    pass # Your code
 
 # Test:
 y = np.array([(X @ np.arange(1,4))[0] for X in list_of_sequences])
