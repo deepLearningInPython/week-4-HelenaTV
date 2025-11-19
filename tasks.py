@@ -163,8 +163,14 @@ assert all(id_to_token[token_to_id[key]]==key for key in token_to_id) and all(to
 # -----------------------------------------------
 def make_vocabulary_map(documents: list) -> tuple:
     # Hint: use your tokenize function
-    pass # Your code
-
+    all_tokens = []
+    for document in documents: 
+      some_tokens = tokenize(document)
+      all_tokens.append(some_tokens)
+    
+    token2id = {str(word): index for index, word in enumerate(np.unique(all_tokens))}
+    id2token = {index: str(word) for index, word in enumerate(np.unique(all_tokens))}
+    return token2id, id2token
 # Test
 t2i, i2t = make_vocabulary_map([text])
 all(i2t[t2i[tok]] == tok for tok in t2i) # should be True
@@ -283,8 +289,8 @@ np.all(sigmoid(np.log([1, 1/3, 1/7])) == np.array([1/2, 1/4, 1/8]))
 
 # Your code here:
 # -----------------------------------------------
-def rnn_layer(w: np.array, list_of_sequences: list[np.array], sigma=sigmoid ) -> np.array:
-    pass # Your code
+#def rnn_layer(w: np.array, list_of_sequences: list[np.array], sigma=sigmoid ) -> np.array:
+    #pass # Your code
 
 # Test
 np.random.seed(10)
