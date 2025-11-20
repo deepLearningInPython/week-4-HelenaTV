@@ -95,7 +95,8 @@ print(word_frequencies2)
 # Your code here:
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
-  word_frequencies = {word: string.count(word) for word in string if string.count(word) > k}
+  tokens = tokenize(string)
+  word_frequencies = {word: tokens.count(word) for word in tokens if tokens.count(word) > k}
   
   return word_frequencies
     
@@ -141,7 +142,7 @@ print(token_to_id)
 #
 # Your code here:
 # -----------------------------------------------
-id_to_token = {index: str(word) for index, word in enumerate(np.unique(tokens))} 
+id_to_token = {index: str(word) for index, word in enumerate(np.unique(tokens))}
 
 # tests: 
 # test 1
@@ -187,12 +188,24 @@ all(i2t[t2i[tok]] == tok for tok in t2i) # should be True
 
 # Your code here:
 # -----------------------------------------------
+# the previous tokenize was on afphabetical order. We don't want that here 
+def tokenize2(string: str) -> list:
+  tokenized_string = []
+  for word in string.split():
+    new_word = ""
+    for letter in word: 
+      if letter.isalpha():
+        new_word +=letter.lower()
+    if new_word: 
+      tokenized_string.append(new_word)
+  return tokenized_string
+
 def tokenize_and_encode(documents: list) -> list:
     # Hint: use your make_vocabulary_map and tokenize function
     t2i, i2t = make_vocabulary_map(documents)
     end = []
     for document in documents: 
-      tokens = tokenize(document)
+      tokens = tokenize2(document)
       ids = []
       for token in tokens: 
         ids.append(t2i[token])
@@ -333,7 +346,7 @@ np.all(sigmoid(np.log([1, 1/3, 1/7])) == np.array([1/2, 1/4, 1/8]))
 # Your code here:
 # -----------------------------------------------
 #def rnn_loss(w: np.array, w, list_of_sequences: list[np.array], y: np.array) -> np.float64:
-    pass # Your code
+    #pass # Your code
 
 # Test:
 #y = np.array([(X @ np.arange(1,4))[0] for X in list_of_sequences])
@@ -350,7 +363,7 @@ np.all(sigmoid(np.log([1, 1/3, 1/7])) == np.array([1/2, 1/4, 1/8]))
 # The data that we will fit is a macroeconomics data set. We'll try to predict inflation ('infl')
 # from the consumer price index ('cpi') and unemployment rate ('unemp').
 # First, load the data set:
-from statsmodels.datasets import macrodata
+#from statsmodels.datasets import macrodata
 
 #data = macrodata.load_pandas().data
 #X = np.hstack([np.ones((len(data),1)), data[['cpi','unemp']].values]) # Features: CPI and unemployment
@@ -407,7 +420,7 @@ from statsmodels.datasets import macrodata
 # many more parameters, and so is more flexible. 
 
 # To visualize the difference in performance we plot the true values and predicted values
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 #plt.plot(yy)
 #plt.plot(pred)
