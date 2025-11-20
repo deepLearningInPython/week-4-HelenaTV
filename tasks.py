@@ -189,7 +189,7 @@ all(i2t[t2i[tok]] == tok for tok in t2i) # should be True
 # Your code here:
 # -----------------------------------------------
 # the previous tokenize was on afphabetical order. We don't want that here 
-def tokenize2(string: str) -> list:
+def tokenize(string: str) -> list:
   tokenized_string = []
   for word in string.split():
     new_word = ""
