@@ -205,7 +205,7 @@ def tokenize_and_encode(documents: list) -> list:
     t2i, i2t = make_vocabulary_map(documents)
     end = []
     for document in documents: 
-      tokens = tokenize2(document)
+      tokens = tokenize(document)
       ids = []
       for token in tokens: 
         ids.append(t2i[token])
